@@ -3,7 +3,7 @@ from pathlib import Path
 from langchain_community.document_loaders import TextLoader, DirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_community.vectorstores import Qdrant
+from langchain_qdrant import QdrantVectorStore
 
 class KnowledgeBase:
     def __init__(self, collection_name: str = "senior_dev_twin"):
@@ -29,7 +29,7 @@ class KnowledgeBase:
         splitter = RecursiveCharacterTextSplitter(chunk_size=600, chunk_overlap=100)
         chunks = splitter.split_documents(docs)
 
-        Qdrant.from_documents(
+        QdrantVectorStore.from_documents(
             chunks,
             self.embeddings,
             path=str(self.db_path),
