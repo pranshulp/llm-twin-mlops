@@ -22,13 +22,21 @@ The project implements a "Zero-Cloud" architecture to ensure 100% data privacy a
 ## Project Structure
 
 llm-twin-mlops/
-├── config/             # Centralized settings and path management
+
+  ├── config/             # Centralized settings and path management
+  
 ├── data_pipeline/      # Core logic: Ingestion, Retrieval, and Inference
+
 ├── my_knowledge/       # Source directory for technical knowledge (Code/Docs)
+
 ├── local_db/           # Persistent Vector Database (Git ignored)
+
 ├── src/
+
 │   └── serving/        # FastAPI application and API routes
+
 ├── .env                # Environment variables (Git ignored)
+
 └── requirements.txt    # Project dependencies
 
 ---
@@ -45,7 +53,7 @@ The inference engine runs locally to ensure data privacy.
 
 2. Python Environment Setup
 - Clone the repository and navigate to the root:
-  git clone https://github.com/your-username/llm-twin-mlops.git
+  git clone https://github.com/pranshulp/llm-twin-mlops.git
   cd llm-twin-mlops
 - Create and activate a virtual environment:
   python -m venv venv
