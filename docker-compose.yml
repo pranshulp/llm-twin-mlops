@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  twin-api:
+    build: .
+    container_name: llm_twin_api
+    ports:
+      - "8000:8000"
+    volumes:
+      # Map your local knowledge and DB folders to the container
+      - ./my_knowledge:/app/my_knowledge
+      - ./local_db:/app/local_db
+    extra_hosts:
+      # This allows the container to talk to Ollama running on your host machine
+      - "host.docker.internal:host-gateway"
+    environment:
+      - OLLAMA_HOST=http://host.docker.internal:11434
+    restart: always

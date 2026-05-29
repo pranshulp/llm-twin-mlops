@@ -1,0 +1,7 @@
+venv/
+venv_linux/
+local_db/
+__pycache__/
+*.pyc
+.git/
+.env

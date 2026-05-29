@@ -1,5 +1,7 @@
 # Python environment
 venv/
+venv_linux/
+venv_mac/
 __pycache__/
 *.pyc
 
