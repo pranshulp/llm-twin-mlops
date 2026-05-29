@@ -18,7 +18,7 @@ The project implements a "Zero-Cloud" architecture to ensure 100% data privacy a
 
 ## Project Structure
 
-llm-twin-mlops/
+llm-twin-mlops/\
 ├── config/             # Centralized settings (chunk size, model names)\
 ├── data_pipeline/      # Core logic: Beam Ingestion, Retrieval, and Inference\
 ├── dags/               # Workflow Orchestration (Airflow/Prefect)\
