@@ -2,17 +2,18 @@ import os
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.providers.standard.operators.python import PythonOperator
-import subprocess
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 def trigger_beam_ingestion():
     """Executes the Beam ingestion script using the venv python."""
-    venv_python = os.path.join(PROJECT_ROOT, "venv", "Scripts", "python.exe")
+    import subprocess
+    
+    project_root = "/opt/airflow/project_root"
     
     result = subprocess.run(
-        [venv_python, "-m", "data_pipeline.beam_ingest"],
-        cwd=PROJECT_ROOT, # Run from the root so imports work
+        ["python3", "-m", "data_pipeline.beam_ingest"],
+        cwd=project_root,
         capture_output=True,
         text=True
     )
@@ -30,7 +31,7 @@ default_args = {
 with DAG(
     'llm_twin_sync_pipeline',
     default_args=default_args,
-    schedule_interval='@daily',
+    schedule='0 0 * * *', # Daily at midnight
     start_date=datetime(2024, 1, 1),
     catchup=False
 ) as dag:
