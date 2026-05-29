@@ -1,5 +1,6 @@
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
+from config.settings import settings
 from data_pipeline.query_engine import TwinQueryEngine
 
 class LLMTwin:
@@ -7,8 +8,9 @@ class LLMTwin:
         self.query_engine = TwinQueryEngine()
         
         self.llm = ChatOllama(
-            model="phi3",
-            temperature=0,
+            model=settings.LLM_MODEL,
+            base_url=settings.OLLAMA_BASE_URL,
+            temperature=settings.TEMPERATURE
         )
         
         self.system_identity = (
