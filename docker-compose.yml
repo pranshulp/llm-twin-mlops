@@ -1,18 +1,60 @@
 version: '3.8'
 
+x-airflow-common: &airflow-common
+  image: apache/airflow:2.10.2
+  environment:
+    - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+    - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+    - AIRFLOW__CORE__FERNET_KEY=''
+    - AIRFLOW__CORE__LOAD_EXAMPLES=False
+    - AIRFLOW__CORE__LOGGING_LEVEL=INFO
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - ./logs:/opt/airflow/logs
+    - ./plugins:/opt/airflow/plugins
+    - .:/opt/airflow/project_root  # Mount project root for the Beam script
+  depends_on:
+    - postgres
+
 services:
+  postgres:
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+
+  airflow-init:
+    <<: *airflow-common
+    command: version
+    environment:
+      - _AIRFLOW_DB_UPGRADE=True
+      - _AIRFLOW_WWW_USER_CREATE=True
+      - _AIRFLOW_WWW_USER_USERNAME=admin
+      - _AIRFLOW_WWW_USER_PASSWORD=admin
+
+  airflow-webserver:
+    <<: *airflow-common
+    command: webserver
+    ports:
+      - "8081:8080" # Avoid conflict if 8080 is used
+    container_name: airflow_webserver
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler
+    container_name: airflow_scheduler
+
+  # Your existing Twin API
   twin-api:
     build: .
     container_name: llm_twin_api
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
     ports:
       - "8000:8000"
     volumes:
-      # Map your local knowledge and DB folders to the container
       - ./my_knowledge:/app/my_knowledge
       - ./local_db:/app/local_db
     extra_hosts:
-      # This allows the container to talk to Ollama running on your host machine
       - "host.docker.internal:host-gateway"
-    environment:
-      - OLLAMA_HOST=http://host.docker.internal:11434
-    restart: always

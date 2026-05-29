@@ -1,3 +1,5 @@
+# Ignore Airflow logs and local artifacts
+logs/
 venv/
 venv_linux/
 local_db/
@@ -5,3 +7,9 @@ __pycache__/
 *.pyc
 .git/
 .env
+image/
+
+# Ignore Airflow SQLite DB and config if created locally
+airflow.db
+airflow.cfg
+unittests.cfg
