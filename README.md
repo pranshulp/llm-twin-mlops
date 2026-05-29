@@ -19,17 +19,17 @@ The project implements a "Zero-Cloud" architecture to ensure 100% data privacy a
 ## Project Structure
 
 llm-twin-mlops/
-├── config/             # Centralized settings (chunk size, model names)
-├── data_pipeline/      # Core logic: Beam Ingestion, Retrieval, and Inference
-├── dags/               # Workflow Orchestration (Airflow/Prefect)
-├── my_knowledge/       # Source directory for technical knowledge
-├── local_db/           # Persistent Vector Database (Git ignored)
-├── src/
-│   └── serving/        # FastAPI application and API routes
-├── Dockerfile          # Containerization configuration
-├── docker-compose.yml  # Multi-container orchestration
-├── .env                # Environment variables
-└── requirements.txt    # Project dependencies
+├── config/             # Centralized settings (chunk size, model names)\
+├── data_pipeline/      # Core logic: Beam Ingestion, Retrieval, and Inference\
+├── dags/               # Workflow Orchestration (Airflow/Prefect)\
+├── my_knowledge/       # Source directory for technical knowledge\
+├── local_db/           # Persistent Vector Database (Git ignored)\
+├── src/\
+│   └── serving/        # FastAPI application and API routes\
+├── Dockerfile          # Containerization configuration\
+├── docker-compose.yml  # Multi-container orchestration\
+├── .env                # Environment variables\
+└── requirements.txt    # Project dependencies\
 
 ---
 
